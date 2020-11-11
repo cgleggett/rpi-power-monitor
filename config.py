@@ -12,9 +12,9 @@ logger.addHandler(ch)
 
 
 # Using a multimeter, measure the voltage of the receptacle where your 9V AC transformer will plug into. Enter the measured value below.
-GRID_VOLTAGE = 124.2
+GRID_VOLTAGE = 122.7
 # Using a multimeter, measure the output voltage of your AC transformer. Using the value on the label is not ideal and will lead to greater accuracy in the calculations.
-AC_TRANSFORMER_OUTPUT_VOLTAGE = 10.2
+AC_TRANSFORMER_OUTPUT_VOLTAGE = 10.56
 
 # InfluxDB Settings
 db_settings = {
@@ -38,21 +38,21 @@ ct5_channel = 7             # 3.5mm Input #2        | Unused
 
 # The values from running the software in "phase" mode should go below!
 ct_phase_correction = {
-    'ct0' : 1,
-    'ct1' : 1,
-    'ct2' : 1,
-    'ct3' : 1,
+    'ct0' : 2.54437563,
+    'ct1' : 1.03808791,
+    'ct2' : 1.37285109,
+    'ct3' : 1.48721195,
     'ct4' : 1,
     'ct5' : 1,
 }
 
 # AFTER phase correction is completed, these values are used in the final calibration for accuracy. See the documentation for more information.
 accuracy_calibration = {
-    'ct0' : 1,
-    'ct1' : 1,
-    'ct2' : 1,
-    'ct3' : 1,
+    'ct0' : 0.9027,
+    'ct1' : 0.9032,
+    'ct2' : 0.2675,
+    'ct3' : 0.269,
     'ct4' : 1,
     'ct5' : 1,
-    'AC'  : 1,
+    'AC'  : 1.07,
 }
