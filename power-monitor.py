@@ -305,15 +305,15 @@ def calculate_power(samples, board_voltage):
             'pf'        : power_factor_1 
         },
         'ct2' : {
-            'type'      : 'consumption', 
-            'power'     : real_power_2,
+            'type'      : 'production', 
+            'power'     : real_power_2 * -1,
             'current'   : rms_current_ct2,
             'voltage'   : rms_voltage_2,
             'pf'        : power_factor_2
         },
         'ct3' : {
-            'type'      : 'consumption',
-            'power'     : real_power_3,         
+            'type'      : 'production',
+            'power'     : real_power_3 * -1,         
             'current'   : rms_current_ct3,
             'voltage'   : rms_voltage_3,            
             'pf'        : power_factor_3            
@@ -449,12 +449,12 @@ def run_main():
             grid_5_current = results['ct5']['current']  # CT5 Current
 
             # If you are monitoring solar/generator inputs to your panel, specify which CT number(s) you are using, and uncomment the commented lines.
-            solar_power = 0
-            solar_current = 0
-            solar_pf = 0
-            # solar_power = results['ct3']['power']
-            # solar_current = results['ct3']['current']
-            # solar_pf = results['ct3']['pf']
+            # solar_power = 0
+            # solar_current = 0
+            # solar_pf = 0
+            solar_power = results['ct2']['power'] + results['ct3']['power']
+            solar_current = results['ct2']['current'] + results['ct3']['current']
+            solar_pf = results['ct2']['pf']
             voltage = results['voltage']
 
             # Set solar power and current to zero if the solar power is under 20W.
@@ -473,10 +473,10 @@ def run_main():
                 solar_current = solar_current * -1
 
             # Unless your specific panel setup matches mine exactly, the following four lines will likely need to be re-written:
-            home_consumption_power = grid_0_power + grid_1_power + grid_2_power + grid_3_power + grid_4_power + grid_5_power + solar_power
+            home_consumption_power = grid_0_power + grid_1_power + solar_power
             net_power = home_consumption_power - solar_power
-            home_consumption_current = grid_2_current + grid_4_current + grid_0_current + grid_1_current + grid_5_current - solar_current
-            net_current = grid_0_current + grid_1_current + grid_2_current + grid_3_current + grid_4_current + grid_5_current + solar_current
+            home_consumption_current = grid_0_current + grid_1_current - solar_current
+            net_current = grid_0_current + grid_1_current + solar_current
 
             if net_power < 0:
                 current_status = "Producing"                                
